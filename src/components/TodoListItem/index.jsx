@@ -1,25 +1,39 @@
 import React from 'react';
 import {
-    List, ListItem, ListItemGraphic, ListItemText,
-    Checkbox
+    Checkbox,
+    Icon,
+    IconButton,
+    ListItem, ListItemGraphic, ListItemText, ListItemMeta
 } from 'mdc-react';
 
-import DBContext from '../../context/db';
+import './index.scss';
 
-export default function TodoListItem({ todo, onStatusChange: onCompleteChange }) {
+export default function TodoListItem({ 
+    todo,
+    onUpdate,
+    onDelete,
+    onSelect
+}) {
+    function handleChange(completed) {
+        onUpdate(todo.id, { completed })
+    }
 
     return (
         <ListItem>
             <ListItemGraphic>
                 <Checkbox 
                     checked={todo.completed}
-                    onChange={onCompleteChange}
+                    onChange={handleChange}
                 />
             </ListItemGraphic>
 
-            <ListItemText>
-                {todo.title}
-            </ListItemText>
+            <ListItemText onClick={() => onSelect(todo)}>{todo.title}</ListItemText>
+
+            <ListItemMeta>
+                <IconButton onClick={() => onDelete(todo.id)}>
+                    <Icon>delete</Icon>
+                </IconButton>
+            </ListItemMeta>
         </ListItem>
     );
 }

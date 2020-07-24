@@ -1,33 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { get } from './components/api';
+import useApi from './hooks/api';
 
-import DBContext from './context/db';
-
-import AppDrawer from './components/AppDrawer';
+import AppDrawer from './components/AppDrawer'; 
 import AppContent from './components/AppContent';
 import TodoList from './components/TodoList';
 
 import './App.scss';
 
 export default function App() {
-    const [lists, setLists] = useState([]);
+    const { data: { lists } } = useApi();
 
-    useEffect(() => {
-        get('lists')().then(setLists);
-    }, []);
+
 
     return (
-        <DBContext.Provider value={{ lists, get }}>
-            <div className="app">
+        <div className="app">
             <AppDrawer lists={lists} />
             <AppContent>
                 <Switch>
-                    <Route path="/:listId" component={TodoList} />
+                    <Route exact path="/:listId" component={TodoList} />
                 </Switch>
             </AppContent>
-            </div>
-        </DBContext.Provider>
+        </div>
     );
 }

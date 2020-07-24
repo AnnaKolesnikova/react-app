@@ -15,7 +15,7 @@ export default function AppDrawer({ lists }) {
                 <ListGroup>
                     <List>
                         {[
-                            {title: 'Задачи', icon: 'home', to: '/'},
+                            {title: 'Задачи', icon: 'home', to: '/', exact: true},
                             {title: 'Важно', icon: 'star', to: '/important'},
                             {title: 'Запланированные', icon: 'event', to: '/planned'}
                         ].map(item => 
@@ -23,10 +23,13 @@ export default function AppDrawer({ lists }) {
                                 key={item.icon}
                                 component={NavLink}
                                 to={item.to}
+                                exact={item.exact}
+                                activeClassName="mdc-list-item--activated"
                             >
                                 <ListItemGraphic>
                                     <Icon>{item.icon}</Icon>
                                 </ListItemGraphic>
+
                                 <ListItemText>
                                     {item.title}
                                 </ListItemText>
@@ -39,9 +42,10 @@ export default function AppDrawer({ lists }) {
                     <List>
                         {lists.map(item => 
                             <ListItem 
-                                key={item.key}
+                                key={item.id}
                                 component={NavLink}
                                 to={item.id}
+                                activeClassName="mdc-list-item--activated"
                             >
                                 <ListItemGraphic>
                                     <Icon>list</Icon>
