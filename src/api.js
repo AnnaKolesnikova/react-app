@@ -1,3 +1,5 @@
+const db = require("db");
+
 export function getLists(collectionName) {
   return db
     .collection("lists")
